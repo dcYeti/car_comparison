@@ -1,3 +1,18 @@
+<?php
+if (isset($_COOKIE['MP4'])){	
+	if (htmlentities($_COOKIE['MP4']) == '12C'){
+    	$loggedIn = true;
+	}
+	else {$loggedIn = false;}
+	}		
+	else
+	{	
+        $loggedIn = false;
+	}
+?>
+
+
+
 <!DOCTYPE html>
 <?php define("CLOSER", "</div> </body> </html>"); ?>
 <html>

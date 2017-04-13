@@ -55,31 +55,14 @@
 	<link href="cssstyles/formstyles.css" type="text/css" rel="stylesheet" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	</head>
-<!-- The rest of this stuff is comment -->
 
-<body>
+<?php 
+include("template_head.php");
+?>
 
-<header>
-Car Comparison List Utility<br/>
-<nav>
-	<ul>
-		<a href="../index.html"><li class="navbar"></li></a>
-		<a href="index.php"><li class="navbar">Home</li></a>
-		<li class="spacer">spacer</li>
-		<?php
-			if ($loggedIn == 'yes'){ print '
-			<a href="mylist.php"><li class ="navbar">MY LIST</li></a> 
-			<a href="logout.php"><li class="navbar">Log Out</li></a>'; }
-			else { print '
-			<a href="register.html"><li class="navbar">Create Account</li></a>
-			<a href="login.php"><li class="navbar">Have an Account? Log In</li></a>'; }
-		?>
-	</ul>
-</nav>
-</header>
 
 <div class = "formbackground">
-	<h4>Register An Account an Create Your Own Car List!</h4>
+	<h4>Register An Account and Create Your Own Car List!</h4>
 	<i>This is a web project hosted on a site with no SSL Encryption - Do not use personal info or info used for other sites!</i>
 	<form name="registeraccount" action="processregister.php" onsubmit="return validateform()" method="post">
 	<p class="formprompt">Select A Username: 

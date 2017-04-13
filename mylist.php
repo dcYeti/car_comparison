@@ -3,7 +3,7 @@
 session_start();
 if (!((isset($_COOKIE['MP4'])) && htmlentities($_COOKIE['MP4']) == '12C')){	
 	   	$loggedIn = false;
-		include("template_head.html");
+		include("template_head.php");
 		print '
 		<div class="carprofile">You Must be Logged In to Use the List, Please Use Links above to create account or log in
 		</div><script>window.stop();</script></body></html>';
@@ -11,7 +11,7 @@ if (!((isset($_COOKIE['MP4'])) && htmlentities($_COOKIE['MP4']) == '12C')){
 	else{
 		$loggedIn = true;
 	}
-include("template_head.html");
+include("template_head.php");
 $username = $_SESSION['username'];
 $firstName =$_SESSION['firstName'];
 $budget = $_SESSION['budget'];
@@ -21,10 +21,10 @@ print "<h4>$firstName" . "`s Car Selections Under $budget</h4>";
 //check the db to see if the user already has a car list saved
 	//connect and select the db
 	$dbName = 'anthopd6_carcomparison';
-	if(!$dbc = mysql_connect(localhost, anthopd6_stthng, israel2020)){
+	if(!$dbc = mysqli_connect($host, $dbUser, $dbPass)){
 	print "Database Connection Error";
 	}
-	if(!@mysql_select_db($dbName, $dbc)){
+	if(!@mysqli_select_db($dbName, $dbc)){
 	print "Error: Database not Selected Succesfully";
 	}
 	//create table if one doesn't exist 
