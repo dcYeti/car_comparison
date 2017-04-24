@@ -1,20 +1,20 @@
 <?php
-$loggedIn = false;
 include('db_connect.php');
 
 //start output buffer, set variables for nav bar based on cookie existence.
 ob_start();
 
 //if logged in, a message telling user to log out first will appear.
+
 if (isset($_COOKIE['MP4'])){	
-	if (htmlentities($_COOKIE['MP4']) == '12C'){
+	if (htmlentities($_COOKIE['MP4']) == '12C'){	
 		//credentials are authentic, Tell user to log out to log in to different accoutn
 		$loggedIn = true;
-		include("template_head.html");
+		include("template_head.php");
 		print '
 		<div class = "carprofile">You are already logged in.  To view or create another account, please log out first.
 		';
-		}
+	}
 }
 else {
 //handle form or accept credentials
@@ -35,41 +35,40 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 	$password4check = $_POST['passwordtry'];
 
 	//connect and select the db
-	$dbName = 'anthopd6_carcomparison';
-	if(!$dbc = mysqli_connect(localhost, anthopd6_stthng, israel2020)){
+	if(!$dbc = mysqli_connect(DBHOST, DBUSER, DBPASS)){
 	print "Database Connection Error";
 	}
-	if(!@mysqli_select_db($dbName, $dbc)){
+	if(!@mysqli_select_db($dbc, DBNAME)){
 	print "Error: Database not Selected Succesfully";
 	}
 	//check to see if the username's there
 	$tableName = 'car_users';
 	$usernameExistsQuery = "SELECT * FROM $tableName WHERE username = '$username4check'";
-	$usernamecheck = mysqli_query($usernameExistsQuery, $dbc);
-	$userInfo = mysqli_fetch_array($usernamecheck);
-	
-	$trueName = $userInfo['username'];
-	$truePass = $userInfo['password'];
-	$trueFirstName = $userInfo['firstname'];
-	$trueBudget = $userInfo['budget'];
-	  if (($username4check == $trueName) && ($password4check == $truePass)){
-		//set cookie and start session
-		$loggedIn = true;
-		include("template_head.php");
-		setcookie('MP4', "12C", time()+7200);
-		session_start();
-		$_SESSION['firstName'] = $trueFirstName;
-		$_SESSION['username'] = $trueName;
-		$_SESSION['budget'] = $trueBudget;
-		print '<div class="carprofile">';
-		print "<h4>You are now logged in!  Make Your Car List by Selecting <b>MY LIST</b> above</h4>";
+	$usernamecheck = mysqli_query($dbc, $usernameExistsQuery);
+	while($userInfo = mysqli_fetch_array($usernamecheck, MYSQLI_ASSOC)) {	
+		$trueName = $userInfo['username'];
+		$truePass = $userInfo['password'];
+		$trueFirstName = $userInfo['firstname'];
+		$trueBudget = $userInfo['budget'];
+	  	if (($username4check == $trueName) && ($password4check == $truePass)){
+			//set cookie and start session		
+			setcookie('MP4', "12C", time()+7200);
+			session_start();
+			$_SESSION['firstName'] = $trueFirstName;
+			$_SESSION['username'] = $trueName;
+			$_SESSION['budget'] = $trueBudget;
+			$overrideTrue = true;
+			include("template_head.php");
+			print '<div class="carprofile">';
+			print "<h4>You are now logged in!  Make Your Car List by Selecting <b>MY LIST</b> above</h4>";
 	  }
 	  else {
 		include("template_head.php");
 		print '<div class="carprofile">';
 		print '<h4>Your username or password is not correct!  Try again.</h4>';	
 	  }
-	mysql_close($dbc);
+	}
+	mysqli_close($dbc);
   }
 }
 else{

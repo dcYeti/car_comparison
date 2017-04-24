@@ -9,6 +9,15 @@ if (isset($_COOKIE['MP4'])){
 	{	
         $loggedIn = false;
 	}
+
+	//In some cases, the $loggedIn variable will need to be overridden to get menu bar options even when cookie is or isn't set
+	if (isset($overrideTrue) && $overrideTrue = true){
+		$loggedIn = true;
+	}
+	if (isset($overrideFalse) && $overrideFalse == true){
+		$loggedIn = false;
+	}
+
 ?>
 
 
@@ -20,20 +29,21 @@ if (isset($_COOKIE['MP4'])){
 	<title>Car Comparison Site</title>
 	<link href="cssstyles/styles.css" type="text/css" rel="stylesheet" />
 	<link href="cssstyles/formstyles.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="../font-awesome-4.6.3/css/font-awesome.min.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	</head>
 <!-- This will escape to PHP to find the appropraite navbar link -->
 
 <body>
 <header>
-Car Comparison List Utility<br/>
+<h2>Car Comparison List Utility</h2>
 <nav>
 	<ul>
 		<a href="../index.html"><li class="navbar"></li></a>
 		<a href="index.php"><li class="navbar">Home</li></a>
 		<li class="spacer">spacer</li>
 		<?php
-			if ($loggedIn == 'yes'){ print '
+			if ($loggedIn == true){ print '
 			<a href="mylist.php"><li class ="navbar">MY LIST</li></a> 
 			<a href="logout.php"><li class="navbar">Log Out</li></a>'; }
 			else { print '

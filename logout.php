@@ -4,8 +4,8 @@ session_start();
 unset($_SESSION);
 $_SESSION = array();
 session_destroy();
-$loggedIn = false;
-include("template_head.html");
+$overrideFalse = true;
+include("template_head.php");
 ?>
 <div class="carprofile">
 <h4>You are now logged out!</h4>

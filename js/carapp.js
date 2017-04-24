@@ -1,27 +1,7 @@
-function openModalForm(){
-	var modalLoc = document.getElementsByClassName('modal_background');
-	modalLoc[0].style.display = 'block';
-	//assign event listener to modal close button
-	var modalCloseLoc = document.getElementById('modal_close_btn');
-	modalCloseLoc.addEventListener('click', closeModalForm, false);
-	modalCloseLoc.addEventListener('mouseover', 
-	function(){modalCloseLoc.setAttribute('class', 'modal_box_close_hi');}, false);
-	modalCloseLoc.addEventListener('mouseout', 
-	function(){modalCloseLoc.setAttribute('class', 'modal_box_close');}, false);
-	}
 
-function closeModalForm(){
-	var modalLoc = document.getElementsByClassName('modal_background');
-	modalLoc[0].style.display = 'none';
-}
 
-//activates add car button
-var buttonLoc = document.getElementById('start_car_add');
-buttonLoc.addEventListener('mouseover', function(){buttonLoc.setAttribute('class', 'rolloverbtn');}, false);
-buttonLoc.addEventListener('mouseout', function(){buttonLoc.setAttribute('class', 'normalbtn');}, false);
-buttonLoc.addEventListener('click', openModalForm, false);
-
-function usedCar(rank, year, make, model, engine, hp, drvtrn, prce, imgfile, desc){
+function usedCar(db_id, rank, year, make, model, engine, hp, drvtrn, milge, prce, imgfile, desc){
+	this.dbID = db_id;
 	this.rank = rank;
 	this.year = year;
 	this.make = make;
@@ -29,6 +9,7 @@ function usedCar(rank, year, make, model, engine, hp, drvtrn, prce, imgfile, des
 	this.engine = engine;
 	this.horsepower = hp;
 	this.drivetrain = drvtrn;
+	this.mileage = milge;
 	this.price = prce;
 	this.imgfile = imgfile;
 	this.desc = desc;
@@ -65,7 +46,8 @@ function displayProfile(e, carList) {
 	var bannerLoc = document.getElementById('specbanner');
 	bannerLoc.textContent = specBanner;
 	//create rank and price sidebar
-	var sidebarHTML = "<h5>Rank</h5><h5>" + carList[carIndex].rank + "</h5><h5>Price</h5><h5>" + carList[carIndex].price + "</h5>";
+	var sidebarHTML = "<h5>Rank</h5><h5>" + carList[carIndex].rank + "</h5><h5>Mileage</h5><h5>" + carList[carIndex].mileage + "</h5>" +
+						"</h5><h5>Price</h5><h5>" + carList[carIndex].price + "</h5>";
 	var asideLoc = document.getElementById('priceaside');
 	asideLoc.innerHTML = sidebarHTML;
 	//assign photo file
@@ -81,18 +63,18 @@ function displayProfile(e, carList) {
 
 //For reference:
 //Class Names are c_rank, c_year, c_make, c_model, c_engine, c_horsepower, c_drivetrain, c_price
-function validatecaradd(){
+function validatecaradd(form_name){
 		var errorExists;
 		var errorMessage;
 		var carRank, carYear, carPrice, carHp;
 		var carMake, carModel, carPic;
-		carRank = document.forms["add_a_car"]["ranking"].value;
-		carYear = document.forms["add_a_car"]["year"].value;
-		carMake = document.forms["add_a_car"]["make"].value;
-		carHp = document.forms["add_a_car"]["horsepower"].value;
-		carModel = document.forms["add_a_car"]["model"].value;
-		carPrice = document.forms["add_a_car"]["price"].value;
-		carPic = document.forms["add_a_car"]["car_pic_src"].value;
+		carRank = document.forms[form_name]["ranking"].value;
+		carYear = document.forms[form_name]["year"].value;
+		carMake = document.forms[form_name]["make"].value;
+		carHp = document.forms[form_name]["horsepower"].value;
+		carModel = document.forms[form_name]["model"].value;
+		carPrice = document.forms[form_name]["price"].value;
+		carPic = document.forms[form_name]["car_pic_src"].value;
 		//make integers of input data
 		carRank = parseInt(carRank); 
 		carPrice = parseInt(carPrice);
@@ -164,8 +146,17 @@ for (var i = 0; i < carList.length; i++){
 		case "c_drivetrain":
 			rowNode[j].textContent = carList[i].drivetrain;
 			break;
+		case "c_mileage":
+			rowNode[j].textContent = carList[i].mileage;
+			break;
 		case "c_price":
 			rowNode[j].textContent = carList[i].price;
+			break;
+		case "c_edit":
+			rowNode[j].innerHTML = '<i class="fa fa-pencil-square-o editlink" id = "edt-db' + carList[i].dbID + '" aria-hidden="true">Edit</i>';
+			break;
+		case "c_delete":
+			rowNode[j].innerHTML = '<i class="fa fa-times deletelink" id = "del-db' + carList[i].dbID + '" aria-hidden="true">Delete</i>';
 			break;
 		default:
 			rowNode[j].textContent = "error";
@@ -240,10 +231,31 @@ for (var i = 0; i < carList.length; i++){
 			newRow.appendChild(newNode);
 			newRow.insertBefore(newNode, newRow.lastChild);
 			break;
+		case "c_mileage":
+			newNode = document.createElement('td');
+			newText = document.createTextNode(carList[i].mileage);
+			newNode.appendChild(newText);
+			newRow.appendChild(newNode);
+			newRow.insertBefore(newNode, newRow.lastChild);
+			break;
 		case "c_price":
 			newNode = document.createElement('td');
 			newText = document.createTextNode(carList[i].price);
 			newNode.appendChild(newText);
+			newRow.appendChild(newNode);
+			newRow.insertBefore(newNode, newRow.lastChild);
+			break;
+		case "c_edit":
+			newNode = document.createElement('td');
+			var editText = '<i class="fa fa-pencil-square-o editlink" id = "edt-db' + carList[i].dbID + '" aria-hidden="true">Edit</i>';
+			newNode.innerHTML = editText;
+			newRow.appendChild(newNode);
+			newRow.insertBefore(newNode, newRow.lastChild);
+			break;
+		case "c_delete":
+			newNode = document.createElement('td');
+			var delText = '<i class="fa fa-times deletelink" id = "del-db' + carList[i].dbID + '" aria-hidden="true">Delete</i>';
+			newNode.innerHTML = delText;
 			newRow.appendChild(newNode);
 			newRow.insertBefore(newNode, newRow.lastChild);
 			break;

@@ -1,8 +1,14 @@
+<?php include('db_connect.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<script>
 	//get info from form
+	<?php 
+		//This will get the path for the AJAX check and put it in a JS variable
+		echo "var txtFilePath = '" . $filePath . "';"; 
+	?>
+
 	function validateform(){
 		var usersname = document.forms["registeraccount"]["username"].value;
 		var nameofperson = document.forms["registeraccount"]["firstname"].value;
@@ -21,11 +27,11 @@
 					usernameExists = true;				
 				}
 				}
-			else {alert ('Problem connecting with database, please try again later');return false;}
+			else {alert ('Problem connecting with database, please try again later');  return false;}
 			}
 	today = new Date();
 	today = today.getTime();
-	xhr.open('GET', "../../carcomparisondata/usernamelist.txt?" + today, false);
+	xhr.open('GET', txtFilePath + '?cache=' + today, false);
 	xhr.send(null);
 		
 	if ((usersname == null || nameofperson == null || pass1 == null || pass2 == null) ||

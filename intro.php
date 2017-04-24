@@ -3,9 +3,9 @@
 	<p class = "cardesc"> This is a quick utility that lets you make a car shopping list.  Collect info on the cars you want to compare, enter their information, sort your car list -- make your decision!</p>
 	<aside class = "specaside">
 			<ul>
-				<li>Get Started</li>
-				<li>This list is open_source, view the code</li>
-			</ul>
+				<li>Get Started, Create Account</li>
+				<li>This project is open_source, <br/>
+				<a href="https://github.com/dcYeti/car_comparison">View the code</a></li>
 	</aside>
 
 	

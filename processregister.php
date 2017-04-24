@@ -21,7 +21,7 @@ if(@mysqli_query($dbc, $createDBQuery)) {       //Checks for DB and create if no
 	username VARCHAR(20) NOT NULL, firstname VARCHAR(20) NOT NULL, password VARCHAR(20) NOT NULL,
 	budget VARCHAR(20) NOT NULL)";
 	@mysqli_select_db($dbc, DBNAME);
-		if (@mysqli_query($dbc, $tableCreateQuery)) { print "Table Made"; }
+		if (@mysqli_query($dbc, $tableCreateQuery)) {  }
 		else{
 		print "Table Error";}
 
@@ -33,7 +33,7 @@ if(@mysqli_query($dbc, $createDBQuery)) {       //Checks for DB and create if no
 	
 	//this is a general list of usernames used by ajax to check if username exists before hitting validation
 	//add to file - javascript will pull file and check for repeats
-	$filePath = "../../carcomparisondata/usernamelist.txt";
+
 	if(is_writable($filePath)){
 		$username4storage = trim($username) . "@";
 		file_put_contents($filePath, $username4storage, FILE_APPEND | LOCK_EX); 
@@ -46,6 +46,7 @@ print "Hello $name - Your account has been set up.  <br/>
 Your username is <b>$username</b><br/>Please use link above to login<br/>";
 print "Keep your car selections under $budget </p>";
 print CLOSER;
+
 }
 ?>
 

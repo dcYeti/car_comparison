@@ -88,9 +88,11 @@ span.modal_box_close{
 	color: rgb(0,0,0);
 	text-align: right;
 	font-size: 24px;
-	bottom: 4%;
+	top: 0%;
+	right: 0%;
 	padding: 3px;
-	position: absolute;
+	position: relative;
+	float: right;
 	border: 1px solid rgb(0,0,0);
 	cursor: pointer;
 }
@@ -101,9 +103,11 @@ span.modal_box_close_hi{
 	color: rgb(0,0,0);
 	text-align: right;
 	font-size: 24px;
-	bottom: 4%;
+	top: 0%;
+	right: 0%;
 	padding: 3px;
-	position: absolute;
+	position: relative;
+	float: right;
 	border: 3px solid rgb(0,0,0);
 	cursor: pointer;
 }
@@ -134,9 +138,9 @@ div.modal_background{
 
 div.modal_content{
 	z-index: 51;
-	margin: 7% 15% 7% 25%;
+	margin: 7% 20% 7% 20%;
 	min-width: 500px;
-	width: 60%;
+	width: 70%;
 	height: 80%;
 	background-color: rgb(180, 200, 220);
 	border: 2px solid rgb(50,50,50);
@@ -157,4 +161,40 @@ textarea {
 	border-radius: 5px;
 	overflow: auto;
 	resize: none;
+}
+
+#photo_prompt {
+	font-size: 11px;
+}
+
+
+/* CSS for Edit Car Screen (Same as new car screen but needs different class names) */
+div.modal_background_edit{
+	display: none;
+	position: fixed;
+	z-index: 50;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0,.4);
+}
+
+div.modal_content_edit{
+	z-index: 51;
+	margin: 7% 20% 7% 20%;
+	min-width: 500px;
+	width: 70%;
+	height: 80%;
+	background-color: rgb(180, 200, 220);
+	border: 2px solid rgb(50,50,50);
+	overflow: auto;
+	opacity: .99;
+
+}
+
+/* Div to hide certain fields */
+div.hidethis {
+	visibility: hidden;
 }
