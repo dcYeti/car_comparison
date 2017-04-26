@@ -1,3 +1,0 @@
-<?php
-print "HEllo World";
-?>

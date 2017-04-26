@@ -18,7 +18,7 @@ if(@mysqli_query($dbc, $createDBQuery)) {       //Checks for DB and create if no
 	/* keep this code for reference - antiquated way to check for presence of table 
 	if (mysqli_num_rows(@mysqli_query("SHOW TABLES LIKE '$tableName'")) == 0){ */
 	$tableCreateQuery = "CREATE TABLE IF NOT EXISTS $tableName (entry_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-	username VARCHAR(20) NOT NULL, firstname VARCHAR(20) NOT NULL, password VARCHAR(20) NOT NULL,
+	username VARCHAR(20) NOT NULL, firstname VARCHAR(20) NOT NULL, password CHAR(40) NOT NULL,
 	budget VARCHAR(20) NOT NULL)";
 	@mysqli_select_db($dbc, DBNAME);
 		if (@mysqli_query($dbc, $tableCreateQuery)) {  }
@@ -27,7 +27,7 @@ if(@mysqli_query($dbc, $createDBQuery)) {       //Checks for DB and create if no
 
 	//write info to appropriate columns: entry_id, username, firstname, password, budget
 	$insertQuery = "INSERT INTO $tableName (username, firstname, password, budget) VALUES 
-	('$username', '$name', '$password', '$budget')";
+	('$username', '$name', SHA1('$password'), '$budget')";
 	if (!@mysqli_query($dbc, $insertQuery)){
 		print "error inserting user data to database";   }
 	
@@ -45,7 +45,7 @@ print '<div class="carcompare">';
 print "Hello $name - Your account has been set up.  <br/>
 Your username is <b>$username</b><br/>Please use link above to login<br/>";
 print "Keep your car selections under $budget </p>";
-print CLOSER;
+echo CLOSER;
 
 }
 ?>

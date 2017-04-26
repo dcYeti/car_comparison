@@ -17,13 +17,13 @@ if (isset($_COOKIE['MP4'])){
 	if (isset($overrideFalse) && $overrideFalse == true){
 		$loggedIn = false;
 	}
-
+	define('CLOSER', '</div> </body> </html>');
 ?>
 
 
 
 <!DOCTYPE html>
-<?php define("CLOSER", "</div> </body> </html>"); ?>
+<?php  ?>
 <html>
 <head>
 	<title>Car Comparison Site</title>
